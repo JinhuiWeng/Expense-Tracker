@@ -1,0 +1,12 @@
+body {
+    padding: 20px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.table .btn {
+    position: relative;
+    left: 25%;
+}
