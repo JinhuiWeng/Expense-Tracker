@@ -10,3 +10,12 @@ table {
     position: relative;
     left: 25%;
 }
+
+.delete-td {
+    text-align: center
+}
+
+.delete-btn {
+    margin: 0;
+
+}
