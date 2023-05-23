@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseFilter from "./components/ExpenseFilter";
 import ExpenseForm from "./components/ExpenseForm";
 import categories from "./components/categories";
-
-
+import ExpenseSearch from "./components/ExpenseSearch";
 
 function App() {
-
   const [expenses, setExpenses] = useState(
     localStorage.getItem("expenses") != null
       ? JSON.parse(localStorage.getItem("expenses") || "[]")
@@ -15,9 +13,12 @@ function App() {
   );
 
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelte = (id: number) => {
-    const updatedExpenses = expenses.filter((expense: any) => expense.id !== id);
+    const updatedExpenses = expenses.filter(
+      (expense: any) => expense.id !== id
+    );
     setExpenses(updatedExpenses);
     localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
   };
@@ -31,9 +32,24 @@ function App() {
     setSelectedCategory(category);
   };
 
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   const filteredExpenses = selectedCategory
     ? expenses.filter((expense: any) => expense.category === selectedCategory)
     : expenses;
+
+  const searchedExpense = searchQuery
+    ? filteredExpenses.filter((expense: any) =>
+        Object.keys(expense).some((key) =>
+          expense[key]
+            .toString()
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        )
+      )
+    : filteredExpenses;
 
   return (
     <div>
@@ -46,12 +62,16 @@ function App() {
           localStorage.setItem("expenses", JSON.stringify(expenses));
         }}
       />
-      <ExpenseFilter onSelectCategory={handleSelect} />
+      <div className="filter-section">
+        <ExpenseFilter onSelectCategory={handleSelect} />
+        <ExpenseSearch value={searchQuery} onTextChange={handleSearch} />
+      </div>
       <ExpenseList
-        expenses={filteredExpenses}
+        expenses={searchedExpense}
         onDelete={handleDelte}
         onDeleteAll={handleDelteAll}
       />
+      {/* <page> */}
     </div>
   );
 }

@@ -8,7 +8,7 @@ interface Props {
 const ExpenseFilter = ({ onSelectCategory }: Props) => {
   return (
     <div>
-      <h3>Choose a categories filter:</h3>
+      <h3>Filter by categories:</h3>
 
       <select
         className="form-select"

@@ -1,20 +1,19 @@
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import categories from "./categories";
 
-
 interface Props {
   onSubmit: (data: ExpenseFormData) => void;
-
 }
 
 const schema = z.object({
   description: z
     .string()
     .min(1, { message: "Description should be at least 3 characters." }),
-  amount: z.number({ invalid_type_error: "Amount is required." }).min(0.01),
+  amount: z
+    .number({ invalid_type_error: "Amount is required." })
+    .multipleOf(0.01),
   category: z.enum(categories, {
     errorMap: () => ({ message: "Category is required." }),
   }),
@@ -63,7 +62,6 @@ const ExpenseForm = ({ onSubmit }: Props) => {
         <input
           {...register("amount", { valueAsNumber: true })}
           id="amount"
-          type="number"
           className="form-control"
         />
         {errors.amount && (
