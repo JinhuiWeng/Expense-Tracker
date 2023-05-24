@@ -1,6 +1,7 @@
 import { MouseEventHandler, useCallback, useState } from "react";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import moment from "moment";
+import ExpensePagination from "./ExpensePagination";
 
 interface Expense {
   id: number;
@@ -60,6 +61,7 @@ function SortButton({
 const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
   const [sortKey, setSortKey] = useState<SortKeys>("description");
   const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const headers: { key: SortKeys; label: string }[] = [
     {
@@ -85,6 +87,15 @@ const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
     setSortKey(key);
   }
 
+  // Pagination
+  const pageSize = 5;
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  const indexOfLastExpense = currentPage * pageSize;
+  const indexOfFirstExpense = indexOfLastExpense - pageSize;
+
+  // Data to display
   const sortedExpenses = useCallback(
     () =>
       SortExpense({
@@ -95,70 +106,94 @@ const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
     [expenses, sortKey, sortOrder]
   );
 
-  if (expenses.length === 0) return <p>No expenses</p>;
+  const totalExpense = sortedExpenses().length;
+  const totalPages = Math.ceil(totalExpense / pageSize);
+
+  const paginatedSortedExpenses = sortedExpenses().slice(
+    indexOfFirstExpense,
+    indexOfLastExpense
+  );
 
   return (
     <>
-      <p className="mt-3">Showing {expenses.length} Expenses</p>
-      <table className="table table-striped table-bordered ">
-        <thead>
-          <tr>
-            {headers.map((row) => (
-              <td key={row.key}>
-                {row.label}
-                <SortButton
-                  columnKey={row.key}
-                  onClick={() => changeSort(row.key)}
-                  {...{
-                    sortKey,
-                    sortOrder,
-                  }}
-                />
-              </td>
-            ))}
-            <td />
-          </tr>
-        </thead>
-        <tbody>
-          {sortedExpenses().map((expense) => (
-            <tr key={expense.id}>
-              <td>{expense.description}</td>
-              <td>${expense.amount.toFixed(2)}</td>
-              <td>{expense.category}</td>
-              <td>{moment(expense.date).format("YYYY-MM-DD")}</td>
-              <td>
-                {/* <td className="col-sm-4">{expense.description}</td>
+      {totalExpense === 0 ? (
+        <p>No expenses</p>
+      ) : (
+        <div>
+          <table className="table table-striped table-bordered ">
+            <thead>
+              <tr>
+                {headers.map((row) => (
+                  <td key={row.key}>
+                    {row.label}
+                    <SortButton
+                      columnKey={row.key}
+                      onClick={() => changeSort(row.key)}
+                      {...{
+                        sortKey,
+                        sortOrder,
+                      }}
+                    />
+                  </td>
+                ))}
+                <td />
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedSortedExpenses.map((expense) => (
+                <tr key={expense.id}>
+                  <td>{expense.description}</td>
+                  <td>${expense.amount.toFixed(2)}</td>
+                  <td>{expense.category}</td>
+                  <td>{moment(expense.date).format("YYYY-MM-DD")}</td>
+                  <td>
+                    {/* <td className="col-sm-4">{expense.description}</td>
               <td className="col-sm-2">${expense.amount.toFixed(2)}</td>
               <td className="col-sm-2">{expense.category}</td>
               <td className="col-sm-2">{moment(expense.date).format("YYYY-MM-DD")}</td>
               <td className="col-sm-1"> */}
-                <button
-                  className="btn btn-outline-danger delete-btn"
-                  onClick={() => onDelete(expense.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>Total</td>
-            <td>
-              $
-              {sortedExpenses()
-                .reduce((acc, expense) => expense.amount + acc, 0)
-                .toFixed(2)}
-            </td>
-            <td colSpan={3}>
-              <button className="btn btn-danger" onClick={() => onDeleteAll()}>
-                Delete All Expenses!
-              </button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+                    <button
+                      className="btn btn-outline-danger delete-btn"
+                      onClick={() => onDelete(expense.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            {currentPage === totalPages && (
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td>
+                    $
+                    {sortedExpenses()
+                      .reduce((acc, expense) => expense.amount + acc, 0)
+                      .toFixed(2)}
+                  </td>
+                  <td colSpan={3}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => onDeleteAll()}
+                    >
+                      Delete All Expenses!
+                    </button>
+                  </td>
+                </tr>
+              </tfoot>
+            )}
+          </table>
+          <div className="page-form">
+            <span>Showing Total {totalExpense} Expenses</span>
+            <ExpensePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+            ></ExpensePagination>
+          </div>
+        </div>
+      )}
     </>
   );
 };
