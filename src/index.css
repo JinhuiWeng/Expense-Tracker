@@ -2,10 +2,6 @@ body {
     padding: 0;
 }
 
-table {
-    margin-top: 20px;
-}
-
 /* header */
 
 .header-section{
@@ -72,6 +68,7 @@ table {
 
 /* table */
 .table {
+	margin-top: 20px;
 	max-width: none;
 	table-layout: fixed;
 	word-wrap: break-word;
