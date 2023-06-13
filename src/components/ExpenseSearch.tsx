@@ -8,8 +8,8 @@ interface Props {
 const ExpenseSearch = ( {value, onTextChange}: Props) => {
     
     return (
-        <div>
-        <h3>Filter by search:</h3>
+        <div className="filter-search">
+        <p>Filter by search:</p>
         <input
         type="text"
         name='query'

@@ -35,6 +35,7 @@ const ExpenseForm = ({ onSubmit }: Props) => {
 
   return (
     <form
+      className="form-section"
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
         reset();
@@ -99,7 +100,7 @@ const ExpenseForm = ({ onSubmit }: Props) => {
         {errors.date && <p className="text-danger">{errors.date.message}</p>}
       </div>
 
-      <div className="mb-3">
+      <div className="mb-3 form-section-btn">
         <button className="btn btn-primary" type="submit">
           Add Expense
         </button>

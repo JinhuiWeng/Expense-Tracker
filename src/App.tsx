@@ -53,6 +53,10 @@ function App() {
 
   return (
     <div>
+      <div className="header-section">
+        <h1 className="flicker">Expense Tracker</h1>
+        <p>Made expense tracking easier</p>
+      </div>
       <ExpenseForm
         onSubmit={(expense) => {
           setExpenses([
@@ -62,6 +66,7 @@ function App() {
           localStorage.setItem("expenses", JSON.stringify(expenses));
         }}
       />
+      <div className="expense-section">
       <div className="filter-section">
         <ExpenseFilter onSelectCategory={handleSelect} />
         <ExpenseSearch value={searchQuery} onTextChange={handleSearch} />
@@ -71,7 +76,7 @@ function App() {
         onDelete={handleDelte}
         onDeleteAll={handleDelteAll}
       />
-      {/* <page> */}
+    </div>
     </div>
   );
 }

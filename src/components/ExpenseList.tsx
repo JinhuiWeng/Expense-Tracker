@@ -119,7 +119,7 @@ const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
       {totalExpense === 0 ? (
         <p>No expenses</p>
       ) : (
-        <div>
+        <div className="table-section table-responsive">
           <table className="table table-striped table-bordered ">
             <thead>
               <tr>
@@ -144,16 +144,11 @@ const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
                 <tr key={expense.id}>
                   <td>{expense.description}</td>
                   <td>${expense.amount.toFixed(2)}</td>
-                  <td>{expense.category}</td>
+                  <td className="td-category">{expense.category}</td>
                   <td>{moment(expense.date).format("YYYY-MM-DD")}</td>
-                  <td>
-                    {/* <td className="col-sm-4">{expense.description}</td>
-              <td className="col-sm-2">${expense.amount.toFixed(2)}</td>
-              <td className="col-sm-2">{expense.category}</td>
-              <td className="col-sm-2">{moment(expense.date).format("YYYY-MM-DD")}</td>
-              <td className="col-sm-1"> */}
+                  <td className="td-delete">
                     <button
-                      className="btn btn-outline-danger delete-btn"
+                      className="btn btn-outline-danger td-delete-btn"
                       onClick={() => onDelete(expense.id)}
                     >
                       Delete
@@ -172,7 +167,7 @@ const ExpenseList = ({ expenses, onDelete, onDeleteAll }: Props) => {
                       .reduce((acc, expense) => expense.amount + acc, 0)
                       .toFixed(2)}
                   </td>
-                  <td colSpan={3}>
+                  <td className="td-delete-all" colSpan={3}>
                     <button
                       className="btn btn-danger"
                       onClick={() => onDeleteAll()}

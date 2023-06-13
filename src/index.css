@@ -1,25 +1,119 @@
 body {
-    padding: 20px;
+    padding: 0;
 }
 
 table {
     margin-top: 20px;
 }
 
-.table .btn {
-    position: relative;
-    left: 25%;
+/* header */
+
+.header-section{
+	text-align: center;
+	background-color: #6CB4EE;
+}
+.header-section p{
+	font-size: 1.2rem;
+	color: #4d4d4d61;
+	padding-left: 85px;
 }
 
-.delete-td {
-    text-align: center
+.flicker{
+	font-size: 3rem;
+	color: #fffefe61;
+	background: -webkit-gradient(linear, left top, right top, from(#e6e6e6), to(#1d1c1c), color-stop(0.8, #ffffff)) no-repeat;
+	background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat;
+	background-size:75px 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	animation: flick 3.5s infinite;
+}
+@keyframes flick {
+	0% {
+	  background-position: top left;
+	}
+	100% {
+	  background-position: top right;
+	}
+  }
+
+/* form section */
+.form-section {
+	width: 60%;
+	border: 1px solid #dee2e6;
+	padding: 10px;
+	margin: 30px auto;
+}
+.form-section .form-section-btn{
+	text-align: center;
 }
 
-.delete-btn {
-    margin: 0;
-
+/* all expense  */
+.expense-section {
+	border: 1px solid #dee2e6;
+	padding: 10px 0;
+	margin: 0 10px;
 }
 
+/* filter section */
+.filter-section {
+	display: flex;
+	justify-content: space-evenly;
+    align-items: center;
+}
+
+.filter-catagory {
+	display: flex;
+}
+
+.filter-search{
+	display: flex;
+}
+
+/* table */
+.table {
+	max-width: none;
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+.table-section {
+	padding: 0 10px;
+}
+
+
+.td-delete {
+	text-align: center;
+}
+
+.td-delete-all {
+	text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+	.expense-section {
+		margin: 0;
+	}
+	.table-section {
+		padding: 0;
+	}
+	.filter-section {
+		flex-direction: column;
+	}
+	.filter-search{
+		padding-left: 30px;
+	}
+	.td-delete-btn {
+		font-size: 0.8rem;
+		font-weight: 500;
+		 inline-size: min-content;
+	}
+	.page-form {
+		flex-direction: column-reverse;
+	}
+}
+
+
+/* Table page nav */
 
 .page-form {
     display: flex;
