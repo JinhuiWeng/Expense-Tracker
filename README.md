@@ -14,4 +14,4 @@ An expense tracker management tool.
 - TypeScript and Local Storage data management
 - Vite and react
 
-![ExpenseTracker](https://github.com/JinhuiWeng/Expense-Tracker/assets/121464684/5573c58f-3fa1-4e34-8178-9b32c730e276)
+![ExpenseTracker](https://github.com/JinhuiWeng/Expense-Tracker/assets/121464684/ed59ed5a-61a3-4d83-a6f4-9e864691b67d)
