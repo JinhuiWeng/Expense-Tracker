@@ -1,8 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseFilter from "./components/ExpenseFilter";
 import ExpenseForm from "./components/ExpenseForm";
-import categories from "./components/categories";
 import ExpenseSearch from "./components/ExpenseSearch";
 
 function App() {
